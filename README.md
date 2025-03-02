@@ -28,6 +28,7 @@ Set up config.json with the following structure:
     "port": 5000
   }
 }
+```
 
 Recommended to use air to run the go server. Install it with:
 
