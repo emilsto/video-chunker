@@ -2,6 +2,9 @@
 
 POC for chunking video files into smaller parts and uploading them to S3 (todo).
 
+
+![Video Chunker Demo](./assets/demo/demo.gif)
+
 ## Docker Setup
 
 For ez deployment, you can use Docker to run the application.
