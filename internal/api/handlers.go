@@ -94,6 +94,8 @@ func VideoUploadHandler(w http.ResponseWriter, r *http.Request) {
 func processVideoIntoChunks(videoPath, chunksDir string) error {
 	videoID := filepath.Base(filepath.Dir(chunksDir))
 
+	// TODO: Figure out how to make smaller chunks for faster streaming
+	// FIXME: Use go ffmpeg bindings instead of exec
 	cmd := exec.Command(
 		"ffmpeg",
 		"-i", videoPath,
