@@ -52,19 +52,3 @@ Simply use npx live-server to run the frontend. Make sure that backend is runnin
 ```bash
 npx live-server
 ```
-
-## Docker Setup
-
-For ez deployment, you can use Docker to run the application.
-
-Run the entire application stack using Docker Compose:
-
-```bash
-docker-compose up --build
-```
-
-This will start:
-- Backend API on port 4999
-- Frontend server on port 8079
-
-Access the application at http://localhost:8079
