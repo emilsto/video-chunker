@@ -94,8 +94,6 @@ func VideoUploadHandler(w http.ResponseWriter, r *http.Request) {
 func processVideoIntoChunks(videoPath, chunksDir string) error {
 	videoID := filepath.Base(filepath.Dir(chunksDir))
 
-	// TODO: Figure out how to make smaller chunks for faster streaming
-	// FIXME: Use go ffmpeg bindings instead of exec
 	cmd := exec.Command(
 		"ffmpeg",
 		"-i", videoPath,
@@ -103,8 +101,16 @@ func processVideoIntoChunks(videoPath, chunksDir string) error {
 		"-level", "3.0",
 		"-start_number", "0",
 		"-hls_time", "1",
+		"-force_key_frames", "expr:gte(t,n_forced*1)",
+		"-vf", "scale=-2:720",
+		"-c:v", "libx264",
+		"-preset", "faster",
+		"-crf", "23",
+		"-c:a", "aac",
+		"-b:a", "128k",
 		"-hls_list_size", "0",
-		// Could move this to point to a CDN or s3
+		"-hls_segment_type", "mpegts",
+		"-hls_flags", "independent_segments",
 		"-hls_base_url", "/video/"+videoID+"/",
 		"-f", "hls",
 		"-hls_segment_filename", filepath.Join(chunksDir, "chunk_%03d.ts"),
