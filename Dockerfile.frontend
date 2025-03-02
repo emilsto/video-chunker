@@ -1,0 +1,7 @@
+FROM node:18-alpine
+
+WORKDIR /app
+COPY html/ ./html/
+RUN npm install -g live-server
+EXPOSE 8080
+CMD ["live-server", "html", "--host=0.0.0.0", "--port=8080"]

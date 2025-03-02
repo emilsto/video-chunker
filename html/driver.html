@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Video Player</title>
+    <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+    <style>
+        .video-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Video Chunker Demo</h1>
+
+    <div class="input-container">
+        <input type="
+    text" id="video-url" placeholder="Video ID" style="width: 100%; padding: 10px; margin: 10px 0;">
+        <button onclick="getVideo()" style="width: 100%; padding: 10px; margin: 10px 0;">Load video</button>
+    </div>
+
+    <div class="video-container">
+
+    </div>
+
+    <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+
+    <script>
+        function getVideo() {
+            var videoId = document.getElementById('video-url').value;
+            const target = document.getElementById('my-video');
+
+            if (window.player) {
+                window.player.dispose();
+            }
+
+            const videoContainer = document.querySelector('.video-container');
+            videoContainer.innerHTML = `
+    <video-js id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" width="640" height="360">
+      <source src="http://localhost:5000/video/${videoId}" type="application/x-mpegURL">
+    </video-js>
+  `;
+
+            window.player = videojs('my-video', {
+                fluid: true,
+                responsive: true,
+                html5: {
+                    hls: {
+                        overrideNative: true
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+</head>
+
+<body>
+    <div id="dropzone" class="dropzone"
+        style="width: 100%; height: 200px; border: 2px dashed #ccc; display: flex; justify-content: center; align-items: center;">
+        Drop your file here
+    </div>
+
+    <script>
+        const dropzone = document.getElementById('dropzone');
+
+        dropzone.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+        });
+
+        dropzone.addEventListener('drop', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const files = event.dataTransfer.files;
+
+            if (files.length > 0) {
+                const formData = new FormData();
+                formData.append('video', files[0]);
+
+                fetch('http://localhost:5000/video/upload', {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Upload success:', data);
+                        document.body.innerHTML = `<h1>File uploaded successfully</h1>
+                        <p>Video ID: ${data.videoId}</p>`;
+                    })
+                    .catch(error => {
+                        console.error('Upload error:', error);
+                    });
+            }
+
+        });
+    </script>
+
+
+
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploader</title>
+</head>
+
+<body>
+    <div id="dropzone">
+
+    </div>
+
+</body>
+
+</html
